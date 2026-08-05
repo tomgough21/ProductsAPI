@@ -1,0 +1,6 @@
+@LRQA_ProductsAPI_HostAddress = http://localhost:5159
+
+GET {{LRQA_ProductsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
