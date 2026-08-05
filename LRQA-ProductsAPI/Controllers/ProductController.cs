@@ -41,6 +41,10 @@ namespace LRQA_ProductsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> Create(Product product)
         {
+            // Id is always database-generated. Out of scope to add CreateProductDto.
+            // API will return the new ID regardless of what's provided here
+            product.Id = 0;
+
             var created = await _productRepository.AddAsync(product);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
