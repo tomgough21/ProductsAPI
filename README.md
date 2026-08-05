@@ -13,11 +13,8 @@ A RESTful ASP.NET Core Web API for managing Products, built for the LRQA Dev Cha
 ## Prerequisites
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
-- The EF Core CLI tool, if you don't already have it:
 
-```bash
-dotnet tool install --global dotnet-ef
-```
+That's it — no database server, and no manual migration step required (see below).
 
 ## Getting started
 
@@ -34,21 +31,22 @@ dotnet tool install --global dotnet-ef
    dotnet restore
    ```
 
-3. Apply migrations to create the SQLite database (`products.db`, created inside `LRQA-ProductsAPI/`):
-
-   ```bash
-   dotnet ef database update --project LRQA-ProductsAPI
-   ```
-
-   This creates the `Products` table and seeds it with a few sample rows. The connection string lives in [`LRQA-ProductsAPI/appsettings.json`](LRQA-ProductsAPI/appsettings.json) under `ConnectionStrings:DefaultConnection` and points at a local `products.db` file — no external database server is required.
-
-4. Run the API:
+3. Run the API:
 
    ```bash
    dotnet run --project LRQA-ProductsAPI
    ```
 
    By default this listens on `http://localhost:5159` (see [`launchSettings.json`](LRQA-ProductsAPI/Properties/launchSettings.json) for the `https` profile too). Open **http://localhost:5159/swagger** for interactive Swagger UI covering every endpoint.
+
+   On startup, the app automatically applies any pending EF Core migrations (`dbContext.Database.Migrate()` in [`Program.cs`](LRQA-ProductsAPI/Program.cs)), creating a local SQLite `products.db` file (inside `LRQA-ProductsAPI/`) and seeding it with a few sample rows the first time it runs. The connection string lives in [`LRQA-ProductsAPI/appsettings.json`](LRQA-ProductsAPI/appsettings.json) under `ConnectionStrings:DefaultConnection`.
+
+   If you'd rather apply migrations manually (e.g. to inspect the SQL, or run them independently of starting the app), install the EF Core CLI tool and run:
+
+   ```bash
+   dotnet tool install --global dotnet-ef
+   dotnet ef database update --project LRQA-ProductsAPI
+   ```
 
 ### Running the tests
 
@@ -126,6 +124,7 @@ LRQA-ProductsAPI/
   Controllers/    ProductController - the 5 CRUD endpoints
   Data/           AppDbContext - EF Core context, model config, seed data
   Middleware/     RequestLoggingMiddleware - logs method/path/status/duration per request
+                  ErrorHandlingMiddleware - catches unhandled exceptions, returns a consistent JSON error response
   Migrations/     EF Core code-first migrations
   Models/         Product entity, with validation attributes
   Repositories/   IProductRepository / ProductRepository - data access layer

@@ -19,6 +19,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Apply any pending migrations on startup, so the database is always in the
+// expected state without requiring a manual `dotnet ef database update` step.
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
