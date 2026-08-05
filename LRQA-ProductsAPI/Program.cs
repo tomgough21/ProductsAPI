@@ -1,4 +1,5 @@
 using LRQA_ProductsAPI.Data;
+using LRQA_ProductsAPI.Middleware;
 using LRQA_ProductsAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRequestLogging();
 
 app.UseHttpsRedirection();
 
