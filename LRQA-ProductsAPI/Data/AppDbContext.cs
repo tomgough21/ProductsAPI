@@ -21,7 +21,7 @@ namespace LRQA_ProductsAPI.Data
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Name = "Running Shoes", Price = 129.99m, Stock = 150 },
                 new Product { Id = 2, Name = "Walking Boots", Price = 89.99m, Stock = 75 },
-                new Product { Id = 2, Name = "Flip Flops", Price = 19.99m, Stock = 45 }
+                new Product { Id = 3, Name = "Flip Flops", Price = 19.99m, Stock = 45 }
             );
         }
     }
