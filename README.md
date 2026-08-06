@@ -14,15 +14,13 @@ A RESTful ASP.NET Core Web API for managing Products, built for the LRQA Dev Cha
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
 
-That's it — no database server, and no manual migration step required (see below).
-
 ## Getting started
 
 1. Clone the repo and move into it:
 
    ```bash
-   git clone <repo-url>
-   cd LRQA-ProductsAPI
+   git clone `https://github.com/tomgough21/ProductsAPI`
+   cd ProductsAPI\LRQA-ProductsAPI
    ```
 
 2. Restore dependencies:
@@ -34,7 +32,7 @@ That's it — no database server, and no manual migration step required (see bel
 3. Run the API:
 
    ```bash
-   dotnet run --project LRQA-ProductsAPI
+   dotnet run --project LRQA-ProductsAPI.csproj
    ```
 
    By default this listens on `http://localhost:5159` (see [`launchSettings.json`](LRQA-ProductsAPI/Properties/launchSettings.json) for the `https` profile too). Open **http://localhost:5159/swagger** for interactive Swagger UI covering every endpoint.
